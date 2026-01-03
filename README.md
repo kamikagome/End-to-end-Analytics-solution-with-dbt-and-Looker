@@ -3,15 +3,10 @@
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat&logo=python)
 ![dbt](https://img.shields.io/badge/dbt-Core-orange?style=flat&logo=dbt)
 ![Azure](https://img.shields.io/badge/Azure-PostgreSQL-0078D4?style=flat&logo=microsoftazure)
-![Status](https://img.shields.io/badge/Status-Active-success)
 
 ## Overview
 
 This repository showcases an end-to-end data engineering solution focused on **Dimensional Modeling**. The project implements a Star Schema on a remote **Azure PostgreSQL** database to facilitate efficient Business Intelligence and Analytics.
-
-The pipeline utilizes **dbt Core** for T-ELT (Transform) workflows, ensuring modular and testable data models, while the data warehouse is hosted on Azure.
-
-![Project Architecture](IMG/architecture_diagram.png)
 
 ---
 
@@ -130,7 +125,11 @@ SELECT COUNT(*) FROM stg.orders;
 
 ---
 
+<<<<<<< Updated upstream
 ## Phase 2: dbt Core Implementation
+=======
+## Week 3: dbt Core Implementation
+>>>>>>> Stashed changes
 
 **Objective:** Implement dbt Core with Medallion Architecture (Bronze → Silver → Gold) for modular, testable data transformations.
 
@@ -177,6 +176,7 @@ sources:
 Each model includes:
 - **`dwh_id`**: Unique identifier for data warehouse tracking
 - **`etl_timestamp`**: Load timestamp for audit purposes
+<<<<<<< Updated upstream
 - **Materialization**: Views for lightweight staging
 
 ### 4. Environment Configuration
@@ -219,6 +219,8 @@ dbt test
 # Build (run + test)
 dbt build
 ```
+=======
+>>>>>>> Stashed changes
 
 ### 6. Data Flow
 
