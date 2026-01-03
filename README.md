@@ -1,9 +1,6 @@
 # Data Engineering project
 # Azure PostgreSQL & dbt Core: Dimensional Modeling Pipeline
 
-![Status](https://img.shields.io/badge/Status-Active-success)
-![Stack](https://img.shields.io/badge/Stack-dbt%20%7C%20Postgres%20%7C%20Azure-blue)
-
 ## 📖 Overview
 This repository showcases an end-to-end data engineering solution focused on **Dimensional Modeling**. The project implements a Star Schema on a remote **Azure PostgreSQL** database to facilitate efficient Business Intelligence and Analytics.
 
