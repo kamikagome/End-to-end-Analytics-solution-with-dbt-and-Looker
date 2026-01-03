@@ -1,4 +1,4 @@
-# Azure PostgreSQL & dbt Core: Dimensional Modeling Pipeline
+# Azure PostgreSQL & dbt Core
 
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat&logo=python)
 ![dbt](https://img.shields.io/badge/dbt-Core-orange?style=flat&logo=dbt)
@@ -124,13 +124,6 @@ SELECT COUNT(*) FROM stg.orders;
 | ![Staging Schema](img/stg.png) | ![Dimensional Schema](img/dim.png) |
 
 ---
-
-<<<<<<< Updated upstream
-## Phase 2: dbt Core Implementation
-=======
-## Week 3: dbt Core Implementation
->>>>>>> Stashed changes
-
 **Objective:** Implement dbt Core with Medallion Architecture (Bronze → Silver → Gold) for modular, testable data transformations.
 
 ### 1. dbt Project Structure
@@ -167,75 +160,13 @@ sources:
 
 ### 3. Bronze Layer Models
 
-| Model | Alias | Description |
-| :--- | :--- | :--- |
-| `stg_orders` | `orders` | Staged orders with `dwh_id` and `etl_timestamp` |
-| `stg_managers` | `reg_managers` | Regional manager assignments |
-| `stg_returned_orders` | `returned_orders` | Return records with order references |
-
 Each model includes:
 - **`dwh_id`**: Unique identifier for data warehouse tracking
 - **`etl_timestamp`**: Load timestamp for audit purposes
-<<<<<<< Updated upstream
-- **Materialization**: Views for lightweight staging
 
 ### 4. Environment Configuration
 
-The project supports multiple environments via `~/.dbt/profiles.yml`:
-
-```yaml
-dbt_superstore:
-  target: dev
-  outputs:
-    dev:
-      type: postgres
-      schema: dev_bronze    # Development schema
-      # ... connection details
-    prod:
-      type: postgres
-      schema: bronze        # Production schema
-      # ... connection details
-```
-
-### 5. dbt Commands
-
-```bash
-# Install dependencies
-dbt deps
-
-# Run all models (dev)
-dbt run
-
-# Run specific model
-dbt run --select stg_orders
-
-# Run with target environment
-dbt run --target dev      # Creates views in dev_bronze
-dbt run --target prod     # Creates views in bronze
-
-# Run tests
-dbt test
-
-# Build (run + test)
-dbt build
-```
-=======
->>>>>>> Stashed changes
-
-### 6. Data Flow
-
-```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   Source (stg)  │────▶│  Bronze Layer   │────▶│  Silver/Gold    │
-│                 │     │                 │     │   (Coming Soon) │
-│  • stg.orders   │     │  • dev_bronze.  │     │                 │
-│  • stg.people   │     │    orders       │     │  • Dimensions   │
-│  • stg.returns  │     │  • dev_bronze.  │     │  • Facts        │
-│                 │     │    reg_managers │     │                 │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-```
-
----
+The project supports multiple environments (dev and prod) via `~/.dbt/profiles.yml`:
 
 ## References
 
