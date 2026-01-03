@@ -1,0 +1,20 @@
+name: dbt_superstore
+
+profile: dbt_superstore
+
+seed-paths: ["seeds"]
+model-paths: ["models"]
+macro-paths: ["macros"]
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  # Builds seeds into '<your_schema_name>_raw'
+  dbt_superstore:
+    +schema: raw
+
+models:
+  dbt_superstore:
+    bronze:
+      +materialized: view

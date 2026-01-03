@@ -1,0 +1,40 @@
+
+version: 2
+
+models:
+  - name: stg_orders
+    description: "Orders data"
+    columns:
+      - name: dwh_id
+        description: "The primary key for this table in dwh"
+        data_tests:
+          - unique
+          - not_null
+      - name: etl_timestamp
+        description: "Datetime when the data was loaded"
+
+  - name: stg_managers
+    description: "Regional managers"
+    columns:
+      - name: dwh_id
+        description: "The primary key for this table in dwh"
+        data_tests:
+          - unique
+          - not_null
+      - name: etl_timestamp
+        description: "Datetime when the data was loaded"
+
+  - name: stg_returned_orders
+    description: "List of returned orders"
+    columns:
+      - name: dwh_id
+        description: "The primary key for this table in dwh"
+        data_tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: "Order id and the foreign key for orders table"
+        data_tests:
+          - not_null
+      - name: etl_timestamp
+        description: "Datetime when the data was loaded"

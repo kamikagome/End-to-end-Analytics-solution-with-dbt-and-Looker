@@ -1,0 +1,46 @@
+==================== 2026-01-03T16:48:41.787367Z | 019b84c2-dd30-7642-8951-5200c8908af2 ====================
+16:48:41.789030 [info ]: Installing dbt project and profile setup
+16:48:41.794760 [info ]: Info Created .vscode/extensions.json with dbt extension recommendation
+16:48:41.795659 [info ]: Success Project created successfully!
+16:48:41.795824 [info ]: Info Project name: jaffle_shop
+16:48:41.795833 [info ]: Info Project directory: jaffle_shop
+16:48:41.795863 [info ]: Info Setting up your profile...
+16:48:41.800353 [info ]: Loading ~/.dbt/profiles.yml
+16:48:41.804479 [info ]: Info Creating new profile...
+16:49:07.094584 [info ]: No dbt_cloud.yml found - proceeding without cloud pre-population
+16:50:06.935681 [info ]: Success Profile written to /Users/genkisudo/.dbt/profiles.yml
+16:50:06.937020 [info ]: Validating profile inputs, adapters, and connection
+
+16:50:06.937085 [info ]: dbt-fusion 2.0.0-preview.89
+16:50:06.940978 [info ]: Started loading project
+16:50:06.959147 [info ]: Loading ~/.dbt/profiles.yml
+16:50:06.967888 [info ]: Finished loading project [  0.03s]
+16:50:06.969227 [info ]: Started debugging
+16:50:06.969275 [info ]: Debugging profile: dev
+16:50:06.969293 [info ]: Debugging dbt version: 2.0.0-preview.89
+16:50:06.969302 [info ]: Debugging platform: macos aarch64 (unix)
+16:50:06.969645 [info ]: Debugging adapter type: postgres (remote)
+16:50:06.981959 [info ]: Debugging dependencies:
+  git: OK
+16:50:06.983628 [info ]: Debugging connection:
+  "port": 5432,
+  "database": "surfalytics_dw_kamil ",
+  "schema": "STG",
+  "host": "surfalytics-prod.postgres.database.azure.com",
+  "user": "surfalyticsadmin"
+[0m18:32:25.914572 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x103b44040>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104bb9ee0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104bb9400>]}
+
+
+============================== 18:32:25.917135 | 0d392ae0-1572-4509-9513-3b77e9a96519 ==============================
+[0m18:32:25.917135 [info ] [MainThread]: Running with dbt=1.10.17
+[0m18:32:25.917451 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'log_format': 'default', 'printer_width': '80', 'no_print': 'None', 'target_path': 'None', 'cache_selected_only': 'False', 'version_check': 'True', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'log_path': 'logs', 'empty': 'False', 'log_cache_events': 'False', 'use_experimental_parser': 'False', 'use_colors': 'True', 'invocation_command': 'dbt run', 'profiles_dir': '/Users/genkisudo/.dbt', 'write_json': 'True', 'warn_error': 'None', 'quiet': 'False', 'indirect_selection': 'eager', 'debug': 'False', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'fail_fast': 'False'}
+[0m18:32:25.917769 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/genkisudo/Documents/end-to-end/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m18:32:25.918850 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.039578583, "process_in_blocks": "0", "process_kernel_time": 0.071647, "process_mem_max_rss": "96223232", "process_out_blocks": "0", "process_user_time": 0.627332}
+[0m18:32:25.919060 [debug] [MainThread]: Command `dbt run` failed at 18:32:25.919015 after 0.04 seconds
+[0m18:32:25.919230 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x103b44040>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104bb9550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104bb91c0>]}
+[0m18:32:25.919405 [debug] [MainThread]: Flushing usage events
+[0m18:32:26.527980 [debug] [MainThread]: An error was encountered while trying to flush usage events
