@@ -15,14 +15,6 @@ unit_tests:
 models:
   - name: stg_orders
     description: '{{ doc("stg_orders") }}'
-    meta:
-      owner: data_engineering_team
-      critical: true
-      contains_pii: true
-      refresh_frequency: daily
-      business_domain: sales
-      upstream_dependencies:
-        - superstore.orders
     columns:
       - name: dwh_id
         description: '{{ doc("dwh_id") }}'
@@ -43,14 +35,6 @@ models:
 
   - name: stg_managers
     description: '{{ doc("stg_managers") }}'
-    meta:
-      owner: data_engineering_team
-      critical: false
-      contains_pii: true
-      refresh_frequency: weekly
-      business_domain: people
-      upstream_dependencies:
-        - superstore.people
     columns:
       - name: dwh_id
         description: '{{ doc("dwh_id") }}'
@@ -62,14 +46,6 @@ models:
 
   - name: stg_returned_orders
     description: '{{ doc("stg_returned_orders") }}'
-    meta:
-      owner: data_engineering_team
-      critical: true
-      contains_pii: false
-      refresh_frequency: daily
-      business_domain: sales
-      upstream_dependencies:
-        - superstore.returns
     columns:
       - name: dwh_id
         description: '{{ doc("dwh_id") }}'

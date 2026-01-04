@@ -6,7 +6,7 @@ sources:
     database: surfalytics_dw_kamil
     schema: stg
 
-    # Adding freshness test for learning purpose, it doesn't make sense forthis data.
+    # Adding freshness test for learning purpose, it doesn't make sense for this data.
     config:
       freshness:
         warn_after:
