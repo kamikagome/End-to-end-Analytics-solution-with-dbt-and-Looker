@@ -33,8 +33,8 @@ WHERE updated_at > (SELECT MAX(updated_at) FROM {{ this }})
 {% endif %}
 ```
 
-**Structure**: `staging/` → `intermediate/` → `marts/`  
-**Naming**: `stg_`, `int_`, `fct_`, `dim_`  
+**Structure**: `staging/` → `intermediate/` → `marts/`
+**Naming**: `stg_`, `int_`, `fct_`, `dim_`
 **Always**: `{{ ref() }}` over hardcoded tables
 
 ## Quick Commands

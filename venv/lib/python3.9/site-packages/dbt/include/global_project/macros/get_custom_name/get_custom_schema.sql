@@ -1,4 +1,3 @@
-
 {#
     Renders a schema name given a custom schema name. If the custom
     schema name is none, then the resulting schema is just the "schema"

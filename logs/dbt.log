@@ -38,7 +38,7 @@
 Runtime Error
   No dbt_project.yml found at expected path /Users/genkisudo/Documents/end-to-end/dbt_project.yml
   Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
-  
+
 [0m18:32:25.918850 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.039578583, "process_in_blocks": "0", "process_kernel_time": 0.071647, "process_mem_max_rss": "96223232", "process_out_blocks": "0", "process_user_time": 0.627332}
 [0m18:32:25.919060 [debug] [MainThread]: Command `dbt run` failed at 18:32:25.919015 after 0.04 seconds
 [0m18:32:25.919230 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x103b44040>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104bb9550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104bb91c0>]}
