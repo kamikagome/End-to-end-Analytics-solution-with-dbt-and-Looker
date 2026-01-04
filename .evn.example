@@ -1,0 +1,5 @@
+AZURE_PG_HOST=exampledb.azure.com
+AZURE_PG_DATABASE=example_dw
+AZURE_PG_USER=admin
+AZURE_PG_PASSWORD=passwrd
+AZURE_PG_PORT=5432

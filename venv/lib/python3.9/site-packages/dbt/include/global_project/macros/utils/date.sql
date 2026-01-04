@@ -1,5 +1,5 @@
 {% macro date(year, month, day) %}
-  {{ return(adapter.dispatch('date', 'dbt') (year, month, day)) }}
+    {{ return(adapter.dispatch('date', 'dbt') (year, month, day)) }}
 {% endmacro %}
 
 
