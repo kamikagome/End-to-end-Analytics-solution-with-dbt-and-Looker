@@ -168,6 +168,18 @@ Each model includes:
 
 The project supports multiple environments (dev and prod) via `~/.dbt/profiles.yml`:
 
+## Week 4: pre-commit and dbt incremental strategies
+
+1. Add pre-commit and github actions. 
+
+2. Compare dbt strategy and dbt config: https://docs.getdbt.com/docs/build/incremental-strategy
+- creating view
+- full table reload
+
+Dbt-postgres supports append, merge, delete+insert.  
+
+Please find more info in INCREMENTAL_STRATEGIES_COMPARISON.md 
+
 ## References
 
 - [Surfalytics - End to End Analytics](https://github.com/surfalytics/end-to-end-analytics)

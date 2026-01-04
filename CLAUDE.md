@@ -42,15 +42,6 @@ WHERE updated_at > (SELECT MAX(updated_at) FROM {{ this }})
 dbt run -s model+          # model + downstream
 dbt test -s model          # test specific model
 dbt build --full-refresh   # rebuild incremental
+dbt source freshness       # check source data freshness
 sqlfluff fix --dialect snowflake .
 ```
-
-# Use this repo as an example: https://github.com/aizhannna/data-projects/tree/main/dbt-azurepostgres-Looker
-
-
-## Pipeline Checklist
-- [ ] Idempotent (rerunnable)
-- [ ] Schema tests + data tests
-- [ ] Nulls handled explicitly
-- [ ] Incremental has unique_key
-- [ ] Docs: `dbt docs generate`
