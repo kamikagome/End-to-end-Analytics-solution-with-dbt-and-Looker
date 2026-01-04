@@ -16,5 +16,22 @@ seeds:
 
 models:
   dbt_superstore:
+    # Bronze layer: Staging models (1:1 with source)
     bronze:
       +materialized: view
+      +meta:
+        layer: bronze
+        owner: data_engineering_team
+        purpose: staging_layer
+        data_quality_tier: raw
+        description: "Staging models that perform basic transformations and standardization"
+
+    # Examples folder for incremental strategy demonstrations
+    examples_incremental_strategies:
+      +materialized: incremental
+      +meta:
+        layer: examples
+        owner: data_engineering_team
+        purpose: documentation
+        data_quality_tier: example
+        description: "Example models demonstrating different incremental strategies"

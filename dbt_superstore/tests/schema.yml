@@ -1,0 +1,8 @@
+version: 2
+
+data_tests:
+  - name: assert_profit_not_greater_than_sales
+    description: >
+      Business rule validation: Profit should never exceed sales amount.
+      This test catches data quality issues where profit is incorrectly calculated
+      or where there are data entry errors. Returns failing records where profit > sales.

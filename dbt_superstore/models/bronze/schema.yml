@@ -1,40 +1,84 @@
 
 version: 2
 
+unit_tests:
+  - name: test_stg_orders_row_id_to_dwh_id
+    model: stg_orders
+    given:
+      - input: source('superstore', 'orders')
+        rows:
+          - {row_id: 1}
+    expect:
+      rows:
+        - {dwh_id: 1}
+
 models:
   - name: stg_orders
-    description: "Orders data"
+    description: '{{ doc("stg_orders") }}'
+    meta:
+      owner: data_engineering_team
+      critical: true
+      contains_pii: true
+      refresh_frequency: daily
+      business_domain: sales
+      upstream_dependencies:
+        - superstore.orders
     columns:
       - name: dwh_id
-        description: "The primary key for this table in dwh"
+        description: '{{ doc("dwh_id") }}'
         data_tests:
           - unique
           - not_null
+      - name: sales
+        description: '{{ doc("sales_column") }}'
+        data_tests:
+          - not_null
+          - is_positive
+      - name: quantity
+        description: '{{ doc("quantity_column") }}'
+        data_tests:
+          - is_positive
       - name: etl_timestamp
-        description: "Datetime when the data was loaded"
+        description: '{{ doc("etl_timestamp") }}'
 
   - name: stg_managers
-    description: "Regional managers"
+    description: '{{ doc("stg_managers") }}'
+    meta:
+      owner: data_engineering_team
+      critical: false
+      contains_pii: true
+      refresh_frequency: weekly
+      business_domain: people
+      upstream_dependencies:
+        - superstore.people
     columns:
       - name: dwh_id
-        description: "The primary key for this table in dwh"
+        description: '{{ doc("dwh_id") }}'
         data_tests:
           - unique
           - not_null
       - name: etl_timestamp
-        description: "Datetime when the data was loaded"
+        description: '{{ doc("etl_timestamp") }}'
 
   - name: stg_returned_orders
-    description: "List of returned orders"
+    description: '{{ doc("stg_returned_orders") }}'
+    meta:
+      owner: data_engineering_team
+      critical: true
+      contains_pii: false
+      refresh_frequency: daily
+      business_domain: sales
+      upstream_dependencies:
+        - superstore.returns
     columns:
       - name: dwh_id
-        description: "The primary key for this table in dwh"
+        description: '{{ doc("dwh_id") }}'
         data_tests:
           - unique
           - not_null
       - name: order_id
-        description: "Order id and the foreign key for orders table"
+        description: '{{ doc("order_id_column") }}'
         data_tests:
           - not_null
       - name: etl_timestamp
-        description: "Datetime when the data was loaded"
+        description: '{{ doc("etl_timestamp") }}'
