@@ -180,9 +180,9 @@ Dbt-postgres supports append, merge, delete+insert.
 
 Please find more info in INCREMENTAL_STRATEGIES_COMPARISON.md
 
-## Week 5: CI/CD Enhancement & Profile Management
+## Week 5: CI/CD And Profile Management
 
-Added dbt tests (single, generic, and unit tets).
+Added dbt documentation and tests (single, generic, and unit tests).
 
 Updated pre-commit dependencies (Flake8 7.1.1, Black 24.10.0, dbt-checkpoint 2.0.2), added isort for import sorting, disabled sqlfluff auto-fixer for safety.
 
