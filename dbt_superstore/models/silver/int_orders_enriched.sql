@@ -60,7 +60,7 @@ SELECT
     returns.returned,
 
     -- Derived columns using CASE statements
-    (returns.returned = 'Yes') AS is_returned,
+    COALESCE(returns.returned = 'Yes', FALSE) AS is_returned,
     COALESCE(calendar.is_weekend, FALSE) AS is_weekend,
 
     -- ETL timestamp

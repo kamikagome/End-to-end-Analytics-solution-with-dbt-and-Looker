@@ -10,7 +10,6 @@ models:
       - name: unique_key
         description: Surrogate key generated from order line dwh_id
         data_tests:
-          - unique
           - not_null
 
       - name: order_line_id

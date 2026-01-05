@@ -6,14 +6,13 @@
 }}
 
 WITH distinct_products AS (
-    SELECT
+    SELECT DISTINCT ON (product_id)
         product_id,
-        -- Use MAX to handle duplicates - take the first product name alphabetically
-        MAX(product_name) AS product_name,
-        MAX(category) AS category,
-        MAX(sub_category) AS sub_category
+        product_name,
+        category,
+        sub_category
     FROM {{ ref('int_orders_enriched') }}
-    GROUP BY product_id
+    ORDER BY product_id
 )
 
 SELECT
