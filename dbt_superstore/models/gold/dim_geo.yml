@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: dim_geo
+    description: "Geographic dimension table containing unique location combinations with surrogate keys"
+    columns:
+      - name: geo_sk
+        description: "Surrogate key for geographic dimension (sequence generated via ROW_NUMBER)"
+        tests:
+          - unique
+          - not_null
+      - name: country_region
+        description: "Country"
+        tests:
+          - not_null
+      - name: city
+        description: "City"
+        tests:
+          - not_null
+      - name: state
+        description: "State or province"
+        tests:
+          - not_null
+      - name: postal_code
+        description: "Postal code"
+        tests:
+          - not_null
+      - name: region
+        description: "Sales region"
+        tests:
+          - not_null
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null

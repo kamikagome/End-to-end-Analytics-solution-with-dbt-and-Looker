@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: "Customer dimension table containing unique customers with surrogate keys"
+    columns:
+      - name: customer_sk
+        description: "Surrogate key for customer dimension (sequence generated via ROW_NUMBER)"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Natural key - original customer identifier"
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Customer name"
+        tests:
+          - not_null
+      - name: segment
+        description: "Customer segment (Consumer, Corporate, Home Office)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Consumer", "Corporate", "Home Office"]
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null

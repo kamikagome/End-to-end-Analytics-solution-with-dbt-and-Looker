@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: dim_product
+    description: "Product dimension table containing unique products with surrogate keys"
+    columns:
+      - name: product_sk
+        description: "Surrogate key for product dimension (sequence generated via ROW_NUMBER)"
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        description: "Natural key - original product identifier"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: "Product name"
+        tests:
+          - not_null
+      - name: category
+        description: "Product category (e.g., Furniture, Office Supplies, Technology)"
+        tests:
+          - not_null
+      - name: sub_category
+        description: "Product sub-category"
+        tests:
+          - not_null
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null
