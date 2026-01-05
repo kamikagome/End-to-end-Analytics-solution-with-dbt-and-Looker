@@ -1,0 +1,12 @@
+dbt_superstore:
+  target: prod
+  outputs:
+    prod:
+      type: postgres
+      host: surfalytics-prod.postgres.database.azure.com
+      port: 5432
+      user: surfalyticsadmin
+      password: Data2024!
+      dbname: surfalytics_dw_kamil
+      schema: bronze
+      threads: 4

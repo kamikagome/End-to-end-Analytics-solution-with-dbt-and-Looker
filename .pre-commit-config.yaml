@@ -1,3 +1,7 @@
+# .pre-commit-config.yaml
+# Optimized for Python 3.9 and dbt-postgres 1.9.1
+fail_fast: false
+
 exclude: |
   (?x)^(
     venv/|
@@ -7,7 +11,7 @@ exclude: |
   )
 
 repos:
-  # General file checks
+  # 1. Standard File Checks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
@@ -15,13 +19,62 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
 
-  # SQL linting with SQLFluff
+  # 2. YAML Formatting (Prettier)
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        files: '\.(yaml|yml)$'
+
+  # 3. Python Formatting (Black)
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        language_version: python3.9
+
+  # 4. Python Import Sorting (isort)
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+
+  # 5. Python Linting (Flake8)
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.1.1
+    hooks:
+      - id: flake8
+
+  # 6. dbt Integrity Checks (dbt-checkpoint)
+  # Temporarily disabled due to dbt-fusion compatibility issues
+  # - repo: https://github.com/dbt-checkpoint/dbt-checkpoint
+  #   rev: v2.0.2
+  #   hooks:
+  #     - id: check-model-has-description
+  #     - id: check-macro-has-description
+  #       files: ^(macros/).*$
+  #     - id: check-model-has-tests-by-group
+  #       args: ["--tests", "unique", "not_null", "--test-cnt", "2", "--"]
+
+  # 7. SQL Linting (SQLFluff)
   - repo: https://github.com/sqlfluff/sqlfluff
     rev: 3.0.7
     hooks:
       - id: sqlfluff-lint
         args: [--dialect, postgres]
+        # Only check files in your dbt project to save time
         files: (^dbt_superstore/.*\.sql$|^SQL/.*\.sql$)
-      - id: sqlfluff-fix
-        args: [--dialect, postgres]
-        files: (^dbt_superstore/.*\.sql$|^SQL/.*\.sql$)
+        additional_dependencies:
+          - "dbt-core==1.9.1" # MATCHING YOUR POSTGRES VERSION
+          - "dbt-postgres==1.9.1" # MATCHING YOUR POSTGRES VERSION
+          - "sqlfluff-templater-dbt"
+
+      # Auto-fixer disabled for safety (was auto-modifying SQL)
+      # - id: sqlfluff-fix
+      #   args: [--dialect, postgres]
+      #   files: (^dbt_superstore/.*\.sql$|^SQL/.*\.sql$)
+      #   additional_dependencies:
+      #     - "dbt-core==1.9.1"
+      #     - "dbt-postgres==1.9.1"
+      #     - "sqlfluff-templater-dbt"
