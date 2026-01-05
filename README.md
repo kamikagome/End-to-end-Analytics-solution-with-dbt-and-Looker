@@ -41,6 +41,8 @@ Ensure your local development environment is configured with the following tools
 | **02** | **Ingestion** | Database schema creation and data ingestion (Excel to PostgreSQL) |
 | **03** | **Modeling** | Implementing dbt Core and building the Medallion Architecture |
 | **04** | **CI/CD** | Pre-commit hooks, GitHub Actions, and incremental refresh strategies |
+| **05** | **Siler Layer** | Data Tests | Docs
+| **06** | **Gold Layer** | Data Tests | Docs
 
 ---
 
@@ -168,7 +170,7 @@ Each model includes:
 
 The project supports multiple environments (dev and prod) via `~/.dbt/profiles.yml`:
 
-## Week 4: pre-commit and dbt incremental strategies
+#### Week 4: pre-commit and dbt incremental strategies
 
 1. Added pre-commit and github actions.
 
@@ -180,7 +182,7 @@ Dbt-postgres supports append, merge, delete+insert.
 
 Please find more info in INCREMENTAL_STRATEGIES_COMPARISON.md
 
-## Week 5: CI/CD And Profile Management
+#### Week 5: CI/CD And Profile Management
 
 Added dbt documentation and tests (single, generic, and unit tests).
 
