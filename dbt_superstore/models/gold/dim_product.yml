@@ -5,7 +5,7 @@ models:
     description: "Product dimension table containing unique products with surrogate keys"
     columns:
       - name: product_sk
-        description: "Surrogate key for product dimension (sequence generated via ROW_NUMBER)"
+        description: "Surrogate key for product dimension (generated via dbt_utils.generate_surrogate_key)"
         tests:
           - unique
           - not_null

@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: fct_sales
-    description: "Sales fact table containing transactional metrics with foreign keys to dimension tables"
+    description: "Sales fact table containing transactional metrics with foreign keys to dimension tables. Grain: One row per order line (order_line_id)."
     columns:
       - name: sales_sk
         description: "Surrogate key for sales fact (generated via dbt_utils.generate_surrogate_key)"
