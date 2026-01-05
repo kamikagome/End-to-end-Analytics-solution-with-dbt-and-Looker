@@ -12,6 +12,7 @@ venv/
 target/
 dbt_packages/
 logs/
+dbt.logs
 
 # Python
 __pycache__/
