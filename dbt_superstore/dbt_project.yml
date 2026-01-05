@@ -37,6 +37,16 @@ models:
         data_quality_tier: enriched
         description: "Intermediate models with joins, enrichments, and derived columns"
 
+    # Gold layer: Dimensional models (star schema)
+    gold:
+      +materialized: table
+      +meta:
+        layer: gold
+        owner: analytics_team
+        purpose: dimensional_modeling
+        data_quality_tier: curated
+        description: "Dimension and fact tables for analytics and reporting"
+
     # Examples folder for incremental strategy demonstrations
     examples_incremental_strategies:
       +materialized: incremental

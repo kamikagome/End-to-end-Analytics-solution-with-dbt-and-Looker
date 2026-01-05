@@ -114,16 +114,14 @@ models:
         data_tests:
           - not_null
           - accepted_values:
-              arguments:
-                values: [true, false]
+              values: [true, false]
 
       - name: is_weekend
         description: Boolean flag indicating if the order was placed on a weekend
         data_tests:
           - not_null
           - accepted_values:
-              arguments:
-                values: [true, false]
+              values: [true, false]
 
       - name: etl_timestamp
         description: Timestamp when the record was loaded into the silver layer

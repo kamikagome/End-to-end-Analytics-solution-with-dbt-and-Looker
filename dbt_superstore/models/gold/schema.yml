@@ -1,0 +1,111 @@
+version: 2
+
+models:
+  - name: dim_product
+    description: "Product dimension table containing unique products with surrogate keys"
+    columns:
+      - name: product_sk
+        description: "Surrogate key for product dimension (sequence generated via ROW_NUMBER)"
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        description: "Natural key - original product identifier"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: "Product name"
+        tests:
+          - not_null
+      - name: category
+        description: "Product category (e.g., Furniture, Office Supplies, Technology)"
+        tests:
+          - not_null
+      - name: sub_category
+        description: "Product sub-category"
+        tests:
+          - not_null
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null
+
+  - name: dim_customer
+    description: "Customer dimension table containing unique customers with surrogate keys"
+    columns:
+      - name: customer_sk
+        description: "Surrogate key for customer dimension (sequence generated via ROW_NUMBER)"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Natural key - original customer identifier"
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Customer name"
+        tests:
+          - not_null
+      - name: segment
+        description: "Customer segment (Consumer, Corporate, Home Office)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Consumer", "Corporate", "Home Office"]
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null
+
+  - name: dim_shipping
+    description: "Shipping dimension table containing unique shipping modes with surrogate keys"
+    columns:
+      - name: shipping_sk
+        description: "Surrogate key for shipping dimension (sequence generated via ROW_NUMBER)"
+        tests:
+          - unique
+          - not_null
+      - name: ship_mode
+        description: "Shipping mode/method"
+        tests:
+          - unique
+          - not_null
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null
+
+  - name: dim_geo
+    description: "Geographic dimension table containing unique location combinations with surrogate keys"
+    columns:
+      - name: geo_sk
+        description: "Surrogate key for geographic dimension (sequence generated via ROW_NUMBER)"
+        tests:
+          - unique
+          - not_null
+      - name: country_region
+        description: "Country"
+        tests:
+          - not_null
+      - name: city
+        description: "City"
+        tests:
+          - not_null
+      - name: state
+        description: "State or province"
+        tests:
+          - not_null
+      - name: postal_code
+        description: "Postal code"
+        tests:
+          - not_null
+      - name: region
+        description: "Sales region"
+        tests:
+          - not_null
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null
