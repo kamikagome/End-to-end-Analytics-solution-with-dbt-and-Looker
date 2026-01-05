@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: fct_sales
+    description: "Sales fact table containing transactional metrics with foreign keys to dimension tables"
+    columns:
+      - name: sales_sk
+        description: "Surrogate key for sales fact (generated via dbt_utils.generate_surrogate_key)"
+        tests:
+          - unique
+          - not_null
+      - name: product_sk
+        description: "Foreign key to dim_product"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_product')
+              field: product_sk
+      - name: customer_sk
+        description: "Foreign key to dim_customer"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_sk
+      - name: shipping_sk
+        description: "Foreign key to dim_shipping"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_shipping')
+              field: shipping_sk
+      - name: geo_sk
+        description: "Foreign key to dim_geo"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_geo')
+              field: geo_sk
+      - name: date_id
+        description: "Date of the order (foreign key to calendar dimension)"
+        tests:
+          - not_null
+      - name: order_line_id
+        description: "Original order line identifier for traceability"
+        tests:
+          - not_null
+      - name: order_id
+        description: "Order identifier for grouping order lines"
+        tests:
+          - not_null
+      - name: sales_amt
+        description: "Sales amount in USD"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+      - name: items_number
+        description: "Quantity of items sold"
+        tests:
+          - not_null
+      - name: profit
+        description: "Profit from the sale"
+      - name: discount
+        description: "Discount applied to the sale"
+      - name: shipping_cost
+        description: "Derived metric: estimated shipping cost"
+        tests:
+          - not_null
+      - name: orders_number
+        description: "Count of orders (always 1 at order line grain)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1]
+      - name: cumulative_sales_by_customer
+        description: "Window function: cumulative sales for each customer over time"
+        tests:
+          - not_null
+      - name: category_sales_rank
+        description: "Window function: rank of sales transactions by amount within each product category"
+        tests:
+          - not_null
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null

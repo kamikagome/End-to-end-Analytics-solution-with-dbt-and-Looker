@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: dim_shipping
+    description: "Shipping dimension table containing unique shipping modes with surrogate keys"
+    columns:
+      - name: shipping_sk
+        description: "Surrogate key for shipping dimension (sequence generated via ROW_NUMBER)"
+        tests:
+          - unique
+          - not_null
+      - name: ship_mode
+        description: "Shipping mode/method"
+        tests:
+          - unique
+          - not_null
+      - name: etl_timestamp
+        description: "Timestamp when record was loaded into Gold layer"
+        tests:
+          - not_null
