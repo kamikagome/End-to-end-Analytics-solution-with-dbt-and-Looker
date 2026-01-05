@@ -170,7 +170,7 @@ Each model includes:
 
 The project supports multiple environments (dev and prod) via `~/.dbt/profiles.yml`:
 
-## Week 4: pre-commit and dbt incremental strategies
+#### Week 4: pre-commit and dbt incremental strategies
 
 1. Added pre-commit and github actions.
 
@@ -182,7 +182,7 @@ Dbt-postgres supports append, merge, delete+insert.
 
 Please find more info in INCREMENTAL_STRATEGIES_COMPARISON.md
 
-## Week 5: CI/CD And Profile Management
+#### Week 5: CI/CD And Profile Management
 
 Added dbt documentation and tests (single, generic, and unit tests).
 
@@ -192,7 +192,7 @@ Improved GitHub Actions with better triggers and error visibility.
 
  Split dbt profiles into conf/ (prod) and conf_local/ (dev) folders.
 
- ## Week 6: Seeds, Silved, and Gold layers
+#### Week 6: Seeds, Silver, and Gold layers
 
 Added 'calendar_2025.csv' file using dbt seed functionality.
 
