@@ -1,6 +1,12 @@
-name: Pre-commit
+name: Pre-commit CI
 
-on: [push, pull_request]
+on:
+  # Run on PRs (This is your main gate)
+  pull_request:
+    types: [opened, synchronize, reopened]
+  # Run on push ONLY to main/master (to keep the "gold standard" code clean)
+  push:
+    branches: [main, master]
 
 jobs:
   pre-commit:
@@ -8,14 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.9
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: |
-          pip install pre-commit sqlfluff
+          python-version: "3.9"
+          # We don't need 'cache: pip' here because pre-commit manages its own separate environments
 
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.1
+        with:
+          # CRITICAL: This arg ensures you see the error details in the GitHub logs
+          extra_args: --show-diff-on-failure
