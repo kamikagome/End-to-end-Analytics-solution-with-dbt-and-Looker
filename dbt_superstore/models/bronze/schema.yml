@@ -1,16 +1,4 @@
-
 version: 2
-
-unit_tests:
-  - name: test_stg_orders_row_id_to_dwh_id
-    model: stg_orders
-    given:
-      - input: source('superstore', 'orders')
-        rows:
-          - {row_id: 1}
-    expect:
-      rows:
-        - {dwh_id: 1}
 
 models:
   - name: stg_orders

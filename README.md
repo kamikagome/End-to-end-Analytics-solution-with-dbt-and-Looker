@@ -190,6 +190,12 @@ Improved GitHub Actions with better triggers and error visibility.
 
  Split dbt profiles into conf/ (prod) and conf_local/ (dev) folders.
 
+ ## Week 6: Seeds, Silved, and Gold layers
+
+Added 'calendar_2025.csv' file using dbt seed functionality.
+
+Created Silver models using this new files.
+
 ## References
 
 - [Surfalytics - End to End Analytics](https://github.com/surfalytics/end-to-end-analytics)

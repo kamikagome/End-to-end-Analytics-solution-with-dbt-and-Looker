@@ -25,5 +25,5 @@ SELECT
     quantity,
     discount,
     profit,
-    current_timestamp AS etl_timestamp
+    CURRENT_TIMESTAMP AS etl_timestamp
 FROM {{ source('superstore', 'orders') }}

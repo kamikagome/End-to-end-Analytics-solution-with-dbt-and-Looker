@@ -1,0 +1,131 @@
+version: 2
+
+models:
+  - name: int_orders_enriched
+    description: >
+      Silver layer model that enriches order transactions with calendar dimensions,
+      regional manager information, and return status. Maintains row-level granularity
+      without aggregation.
+    columns:
+      - name: unique_key
+        description: Surrogate key generated from order line dwh_id
+        data_tests:
+          - unique
+          - not_null
+
+      - name: order_line_id
+        description: Original dwh_id from bronze stg_orders, represents unique order line
+        data_tests:
+          - not_null
+
+      - name: order_id
+        description: Order identifier
+        data_tests:
+          - not_null
+
+      - name: order_date
+        description: Date when the order was placed
+        data_tests:
+          - not_null
+
+      - name: ship_date
+        description: Date when the order was shipped
+
+      - name: ship_mode
+        description: Shipping method used for the order
+
+      - name: customer_id
+        description: Unique customer identifier
+        data_tests:
+          - not_null
+
+      - name: customer_name
+        description: Name of the customer
+
+      - name: segment
+        description: Customer segment (Consumer, Corporate, Home Office)
+
+      - name: country_region
+        description: Country where the order was placed
+
+      - name: city
+        description: City where the order was placed
+
+      - name: state
+        description: State where the order was placed
+
+      - name: postal_code
+        description: Postal code of the delivery address
+
+      - name: region
+        description: Sales region
+
+      - name: product_id
+        description: Unique product identifier
+        data_tests:
+          - not_null
+
+      - name: category
+        description: Product category
+
+      - name: sub_category
+        description: Product sub-category
+
+      - name: product_name
+        description: Name of the product
+
+      - name: sales
+        description: Sales amount for the order line
+        data_tests:
+          - not_null
+
+      - name: quantity
+        description: Quantity of items ordered
+
+      - name: discount
+        description: Discount applied to the order
+
+      - name: profit
+        description: Profit from the order line
+
+      - name: order_year
+        description: Year extracted from order_date via calendar join
+
+      - name: order_month
+        description: Month number extracted from order_date via calendar join
+
+      - name: order_month_name
+        description: Month name extracted from order_date via calendar join
+
+      - name: order_day_of_week
+        description: Day of week extracted from order_date via calendar join
+
+      - name: calendar_is_weekend
+        description: Weekend flag from calendar table
+
+      - name: regional_manager
+        description: Name of the regional manager responsible for this region
+
+      - name: returned
+        description: Return status from returns table (Yes/null)
+
+      - name: is_returned
+        description: Boolean flag indicating if the order was returned
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]
+
+      - name: is_weekend
+        description: Boolean flag indicating if the order was placed on a weekend
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]
+
+      - name: etl_timestamp
+        description: Timestamp when the record was loaded into the silver layer
+        data_tests:
+          - not_null

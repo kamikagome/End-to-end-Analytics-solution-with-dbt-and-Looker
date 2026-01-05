@@ -4,8 +4,13 @@
 ) }}
 
 SELECT
+    {{
+        dbt_utils.generate_surrogate_key([
+            'regional_manager',
+            'region'
+        ])
+    }} AS dwh_id,
     regional_manager AS manager_name,
     region,
-    row_number() OVER () AS dwh_id,
-    current_timestamp AS etl_timestamp
+    CURRENT_TIMESTAMP AS etl_timestamp
 FROM {{ source('superstore', 'people') }}

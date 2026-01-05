@@ -6,6 +6,6 @@
 SELECT
     order_id,
     returned,
-    row_number() OVER () AS dwh_id,
-    current_timestamp AS etl_timestamp
+    ROW_NUMBER() OVER (ORDER BY order_id) AS dwh_id,
+    CURRENT_TIMESTAMP AS etl_timestamp
 FROM {{ source('superstore', 'returns') }}

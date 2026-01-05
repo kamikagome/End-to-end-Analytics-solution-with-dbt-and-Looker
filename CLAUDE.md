@@ -9,6 +9,7 @@ macOS | VS Code | Claude Code | Staff Data/Analytics Engineer
 - No `SELECT *` in prod
 - No untested migrations on prod
 - No breaking schema changes (add-only)
+- Do not change anyhting without explicidly saying it and asking before a change
 
 ## dbt Best Practices
 ```yaml
