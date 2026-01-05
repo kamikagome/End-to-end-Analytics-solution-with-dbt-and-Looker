@@ -170,15 +170,25 @@ The project supports multiple environments (dev and prod) via `~/.dbt/profiles.y
 
 ## Week 4: pre-commit and dbt incremental strategies
 
-1. Add pre-commit and github actions.
+1. Added pre-commit and github actions.
 
-2. Compare dbt strategy and dbt config: https://docs.getdbt.com/docs/build/incremental-strategy
+2. Compared dbt strategy and dbt config: https://docs.getdbt.com/docs/build/incremental-strategy
 - creating view
 - full table reload
 
 Dbt-postgres supports append, merge, delete+insert.
 
 Please find more info in INCREMENTAL_STRATEGIES_COMPARISON.md
+
+## Week 5: CI/CD Enhancement & Profile Management
+
+Added dbt tests (single, generic, and unit tets).
+
+Updated pre-commit dependencies (Flake8 7.1.1, Black 24.10.0, dbt-checkpoint 2.0.2), added isort for import sorting, disabled sqlfluff auto-fixer for safety.
+
+Improved GitHub Actions with better triggers and error visibility.
+
+ Split dbt profiles into conf/ (prod) and conf_local/ (dev) folders.
 
 ## References
 
