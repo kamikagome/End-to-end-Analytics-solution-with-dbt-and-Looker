@@ -10,13 +10,13 @@ WITH distinct_geo AS (
         country_region,
         city,
         state,
-        postal_code,
+        COALESCE(postal_code, 'UNKNOWN') AS postal_code,
         region
     FROM {{ ref('int_orders_enriched') }}
 )
 
 SELECT
-    ROW_NUMBER() OVER (ORDER BY country_region, state, city, postal_code) AS geo_sk,
+    {{ dbt_utils.generate_surrogate_key(['country_region', 'state', 'city', 'postal_code']) }} AS geo_sk,
     country_region,
     city,
     state,

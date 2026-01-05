@@ -12,7 +12,7 @@ WITH distinct_shipping AS (
 )
 
 SELECT
-    ROW_NUMBER() OVER (ORDER BY ship_mode) AS shipping_sk,
+    {{ dbt_utils.generate_surrogate_key(['ship_mode']) }} AS shipping_sk,
     ship_mode,
     CURRENT_TIMESTAMP AS etl_timestamp
 FROM distinct_shipping
