@@ -1,4 +1,4 @@
-#!/Users/genkisudo/Documents/end-to-end/venv/bin/python
+#!/Users/genkisudo/Documents/end-to-end/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
