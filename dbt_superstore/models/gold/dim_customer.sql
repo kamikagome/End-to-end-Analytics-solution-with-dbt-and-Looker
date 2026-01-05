@@ -6,15 +6,17 @@
 }}
 
 WITH distinct_customers AS (
-    SELECT DISTINCT
+    SELECT
         customer_id,
-        customer_name,
-        segment
+        -- Use MAX to handle potential duplicates deterministically
+        MAX(customer_name) AS customer_name,
+        MAX(segment) AS segment
     FROM {{ ref('int_orders_enriched') }}
+    GROUP BY customer_id
 )
 
 SELECT
-    ROW_NUMBER() OVER (ORDER BY customer_id) AS customer_sk,
+    {{ dbt_utils.generate_surrogate_key(['customer_id']) }} AS customer_sk,
     customer_id,
     customer_name,
     segment,

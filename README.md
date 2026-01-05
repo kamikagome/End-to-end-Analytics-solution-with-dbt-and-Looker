@@ -192,11 +192,21 @@ Improved GitHub Actions with better triggers and error visibility.
 
  Split dbt profiles into conf/ (prod) and conf_local/ (dev) folders.
 
-#### Week 6: Seeds, Silver, and Gold layers
+ ## Week 6: Seeds, Silver, and Gold Layers
 
-Added 'calendar_2025.csv' file using dbt seed functionality.
+Added `calendar_2025.csv` file using dbt seed functionality.
 
-Created Silver models using this new files.
+Created Silver models using this new file.
+
+### Gold Layer
+
+Implements Gold layer Star Schema with 4 dimension tables (`dim_product`, `dim_customer`, `dim_shipping`, `dim_geo`) and 1 fact table (`fct_sales`).
+
+**Key features:**
+- Surrogate keys via `dbt_utils.generate_surrogate_key()`
+- Window functions: `cumulative_sales_by_customer`, `category_sales_rank`
+- NULL handling and duplicate resolution
+- 51 data quality tests (all passing)
 
 ## References
 
