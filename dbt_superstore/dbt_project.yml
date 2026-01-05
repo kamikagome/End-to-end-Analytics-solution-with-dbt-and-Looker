@@ -10,7 +10,8 @@ clean-targets:
   - "dbt_packages"
 
 seeds:
-  # Builds seeds into '<your_schema_name>_raw'
+  # Seeds are for small, static reference data (e.g., calendar, lookup tables)
+  # Transactional data should be ingested via source tables
   dbt_superstore:
     +schema: raw
 
@@ -26,6 +27,16 @@ models:
         data_quality_tier: raw
         description: "Staging models that perform basic transformations and standardization"
 
+    # Silver layer: Intermediate models with business logic and joins
+    silver:
+      +materialized: view
+      +meta:
+        layer: silver
+        owner: analytics_team
+        purpose: intermediate_layer
+        data_quality_tier: enriched
+        description: "Intermediate models with joins, enrichments, and derived columns"
+
     # Examples folder for incremental strategy demonstrations
     examples_incremental_strategies:
       +materialized: incremental
@@ -35,3 +46,7 @@ models:
         purpose: documentation
         data_quality_tier: example
         description: "Example models demonstrating different incremental strategies"
+
+dispatch:
+  - macro_namespace: dbt
+    search_order: ["dbt_project_evaluator", "dbt"]

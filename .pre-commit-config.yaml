@@ -58,23 +58,25 @@ repos:
   #       args: ["--tests", "unique", "not_null", "--test-cnt", "2", "--"]
 
   # 7. SQL Linting (SQLFluff)
-  - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.0.7
-    hooks:
-      - id: sqlfluff-lint
-        args: [--dialect, postgres]
-        # Only check files in your dbt project to save time
-        files: (^dbt_superstore/.*\.sql$|^SQL/.*\.sql$)
-        additional_dependencies:
-          - "dbt-core==1.9.1" # MATCHING YOUR POSTGRES VERSION
-          - "dbt-postgres==1.9.1" # MATCHING YOUR POSTGRES VERSION
-          - "sqlfluff-templater-dbt"
+  # Temporarily disabled - SQLFluff is hanging during dbt template parsing
+  # - repo: https://github.com/sqlfluff/sqlfluff
+  #   rev: 3.0.7
+  #   hooks:
+  #     - id: sqlfluff-lint
+  #       args: [--dialect, postgres]
+  #       # Only check files in your dbt project to save time
+  #       files: (^dbt_superstore/.*\.sql$|^SQL/.*\.sql$)
+  #       exclude: (^dbt_superstore/dbt_packages/|^dbt_superstore/target/)
+  #       additional_dependencies:
+  #         - "dbt-core==1.9.1" # MATCHING YOUR POSTGRES VERSION
+  #         - "dbt-postgres==1.9.1" # MATCHING YOUR POSTGRES VERSION
+  #         - "sqlfluff-templater-dbt"
 
-      # Auto-fixer disabled for safety (was auto-modifying SQL)
-      # - id: sqlfluff-fix
-      #   args: [--dialect, postgres]
-      #   files: (^dbt_superstore/.*\.sql$|^SQL/.*\.sql$)
-      #   additional_dependencies:
-      #     - "dbt-core==1.9.1"
-      #     - "dbt-postgres==1.9.1"
-      #     - "sqlfluff-templater-dbt"
+  # Auto-fixer disabled for safety (was auto-modifying SQL)
+  # - id: sqlfluff-fix
+  #   args: [--dialect, postgres]
+  #   files: (^dbt_superstore/.*\.sql$|^SQL/.*\.sql$)
+  #   additional_dependencies:
+  #     - "dbt-core==1.9.1"
+  #     - "dbt-postgres==1.9.1"
+  #     - "sqlfluff-templater-dbt"
