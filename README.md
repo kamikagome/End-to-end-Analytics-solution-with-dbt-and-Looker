@@ -228,11 +228,7 @@ Implemented proper schema separation using a custom `generate_schema_name` macro
 
 #### Physical Data Model (ERD)
 
-Generated Entity-Relationship Diagram using DBeaver to visualize the Star Schema:
-
-| Physical Data Model |
-| :---: |
-| ![Star Schema ERD](img/superstore_kpi.png) |
+Generated Entity-Relationship Diagram using DBeaver to visualize the Star Schema.
 
 **Star Schema Components:**
 
