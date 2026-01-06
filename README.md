@@ -190,9 +190,9 @@ Updated pre-commit dependencies (Flake8 7.1.1, Black 24.10.0, dbt-checkpoint 2.0
 
 Improved GitHub Actions with better triggers and error visibility.
 
- Split dbt profiles into conf/ (prod) and conf_local/ (dev) folders.
+ Split dbt profiles into conf/ (prod) and conf_local/ (dev) folders. Now it's possible to test new changes safely without breaking the production.
 
- ## Week 6: Seeds, Silver, and Gold Layers
+### Week 6: Seeds, Silver, and Gold Layers
 
 Added `calendar_2025.csv` file using dbt seed functionality.
 
