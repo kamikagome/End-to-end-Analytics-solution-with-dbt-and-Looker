@@ -41,8 +41,9 @@ Ensure your local development environment is configured with the following tools
 | **02** | **Ingestion** | Database schema creation and data ingestion (Excel to PostgreSQL) |
 | **03** | **Modeling** | Implementing dbt Core and building the Medallion Architecture |
 | **04** | **CI/CD** | Pre-commit hooks, GitHub Actions, and incremental refresh strategies |
-| **05** | **Silver layer** | Data Tests
-| **06** | **Gold layer** | Data Tests | Dim and Fact tables | Docs
+| **05** | **Silver Layer** | Data Tests |
+| **06** | **Gold Layer** | Dim and Fact tables, Data Tests, Documentation |
+| **07** | **Schema Management** | Multi-schema architecture, Physical Data Model (ERD), Snapshots | BI tools connection (Looker)
 
 ---
 
@@ -207,6 +208,75 @@ Implements Gold layer Star Schema with 4 dimension tables (`dim_product`, `dim_c
 - Window functions: `cumulative_sales_by_customer`, `category_sales_rank`
 - NULL handling and duplicate resolution
 - 51 data quality tests (all passing)
+
+### Week 7: Schema Management & Physical Data Model
+
+#### Multi-Schema Architecture
+
+Implemented proper schema separation using a custom `generate_schema_name` macro to route models to layer-specific schemas:
+
+| Environment | Bronze | Silver | Gold |
+| :--- | :--- | :--- | :--- |
+| **Development** | `dev_bronze` | `dev_silver` | `dev_gold` |
+| **Production** | `bronze` | `silver` | `gold` |
+
+**Key Changes:**
+
+- **`macros/generate_schema_name.sql`**: Custom macro that dynamically routes models based on their layer configuration and target environment
+- **`dbt_project.yml`**: Added `+schema` config for each layer (bronze, silver, gold)
+- **`profiles.yml`**: Updated base schema to `dev` for development and `public` for production
+
+#### Physical Data Model (ERD)
+
+Generated Entity-Relationship Diagram using DBeaver to visualize the Star Schema:
+
+| Physical Data Model |
+| :---: |
+| ![Star Schema ERD](img/superstore_kpi.png) |
+
+**Star Schema Components:**
+
+```
+                    ┌─────────────────┐
+                    │   dim_product   │
+                    │─────────────────│
+                    │ PK product_sk   │
+                    └────────┬────────┘
+                             │
+┌─────────────────┐          │          ┌─────────────────┐
+│  dim_customer   │          │          │   dim_shipping  │
+│─────────────────│          │          │─────────────────│
+│ PK customer_sk  │          │          │ PK shipping_sk  │
+└────────┬────────┘          │          └────────┬────────┘
+         │     ┌─────────────┴───────────┐       │
+         └─────┤       fct_sales         ├───────┘
+               │─────────────────────────│
+               │ FK product_sk           │
+               │ FK customer_sk          │
+               │ FK shipping_sk          │
+               │ FK geo_sk               │
+               │    sales_amt            │
+               │    profit               │
+               └─────────────┬───────────┘
+                             │
+                    ┌────────┴────────┐
+                    │     dim_geo     │
+                    │─────────────────│
+                    │ PK geo_sk       │
+                    └─────────────────┘
+```
+
+#### dbt Snapshots
+
+Added snapshot functionality for Slowly Changing Dimensions (SCD Type 2) tracking:
+
+```
+dbt_superstore/
+└── snapshots/
+    └── scd_*.sql
+```
+
+---
 
 ## References
 

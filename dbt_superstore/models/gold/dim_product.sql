@@ -1,25 +1,22 @@
 {{
     config(
-        materialized='table',
+        materialized='view',
         alias='dim_product'
     )
 }}
 
-WITH distinct_products AS (
-    SELECT DISTINCT ON (product_id)
-        product_id,
-        product_name,
-        category,
-        sub_category
-    FROM {{ ref('int_orders_enriched') }}
-    ORDER BY product_id
-)
+-- SCD Type 2 Product Dimension
+-- Sources from snapshot to track historical changes to product attributes
+-- dbt_valid_from/dbt_valid_to define the validity period for each record version
 
 SELECT
-    {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_sk,
+    dbt_scd_id AS product_sk,
     product_id,
     product_name,
     category,
     sub_category,
-    CURRENT_TIMESTAMP AS etl_timestamp
-FROM distinct_products
+    dbt_valid_from,
+    dbt_valid_to,
+    CASE WHEN dbt_valid_to IS NULL THEN TRUE ELSE FALSE END AS is_current,
+    dbt_updated_at AS etl_timestamp
+FROM {{ ref('snp_product') }}

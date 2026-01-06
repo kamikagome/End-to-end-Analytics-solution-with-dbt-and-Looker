@@ -2,31 +2,43 @@ version: 2
 
 models:
   - name: dim_product
-    description: "Product dimension table containing unique products with surrogate keys"
+    description: |
+      SCD Type 2 Product dimension table tracking historical changes to product attributes.
+      Each product can have multiple records representing different versions over time.
+      Use is_current = TRUE to get the latest version of each product.
     columns:
       - name: product_sk
-        description: "Surrogate key for product dimension (generated via dbt_utils.generate_surrogate_key)"
+        description: "Surrogate key for product dimension version (dbt_scd_id from snapshot)"
         tests:
           - unique
           - not_null
       - name: product_id
-        description: "Natural key - original product identifier"
+        description: "Natural key - original product identifier (not unique due to SCD Type 2)"
         tests:
-          - unique
           - not_null
       - name: product_name
-        description: "Product name"
+        description: "Product name (tracked for changes)"
         tests:
           - not_null
       - name: category
-        description: "Product category (e.g., Furniture, Office Supplies, Technology)"
+        description: "Product category (e.g., Furniture, Office Supplies, Technology) - tracked for changes"
         tests:
           - not_null
       - name: sub_category
-        description: "Product sub-category"
+        description: "Product sub-category - tracked for changes"
+        tests:
+          - not_null
+      - name: dbt_valid_from
+        description: "Timestamp when this version of the record became valid"
+        tests:
+          - not_null
+      - name: dbt_valid_to
+        description: "Timestamp when this version of the record was superseded (NULL for current records)"
+      - name: is_current
+        description: "Flag indicating if this is the current/active version of the product (TRUE/FALSE)"
         tests:
           - not_null
       - name: etl_timestamp
-        description: "Timestamp when record was loaded into Gold layer"
+        description: "Timestamp when record was last updated by dbt snapshot"
         tests:
           - not_null
