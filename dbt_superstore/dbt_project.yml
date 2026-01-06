@@ -19,6 +19,7 @@ models:
   dbt_superstore:
     # Bronze layer: Staging models (1:1 with source)
     bronze:
+      +schema: bronze
       +materialized: view
       +meta:
         layer: bronze
@@ -29,6 +30,7 @@ models:
 
     # Silver layer: Intermediate models with business logic and joins
     silver:
+      +schema: silver
       +materialized: view
       +meta:
         layer: silver
@@ -39,6 +41,7 @@ models:
 
     # Gold layer: Dimensional models (star schema)
     gold:
+      +schema: gold
       +materialized: table
       +meta:
         layer: gold
