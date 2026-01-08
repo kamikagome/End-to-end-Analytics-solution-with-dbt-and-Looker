@@ -272,6 +272,10 @@ dbt_superstore/
     └── scd_*.sql
 ```
 
+After that, we can connect to Looker BI and create a dashboard.
+
+Example: https://github.com/kamikagome/looker_dashboard
+
 ---
 
 ## References
