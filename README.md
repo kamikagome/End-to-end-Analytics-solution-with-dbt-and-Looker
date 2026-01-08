@@ -44,6 +44,7 @@ Ensure your local development environment is configured with the following tools
 | **05** | **Silver Layer** | Data Tests |
 | **06** | **Gold Layer** | Dim and Fact tables, Data Tests, Documentation |
 | **07** | **Schema Management** | Multi-schema architecture, Physical Data Model (ERD), Snapshots | BI tools connection (Looker)
+| **08** | **Docker** | Docker Image and CI/CD 
 
 ---
 
