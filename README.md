@@ -276,6 +276,10 @@ After that, we can connect to Looker BI and create a dashboard.
 
 Example: https://github.com/kamikagome/looker_dashboard
 
+### Week 8: Docker and CI
+
+Implemented a containerized CI/CD pipeline for dbt, enabling automated testing against real data in isolated schemas.
+
 ---
 
 ## References
