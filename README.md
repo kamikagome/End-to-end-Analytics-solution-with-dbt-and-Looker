@@ -286,6 +286,5 @@ Implemented a containerized CI/CD pipeline for dbt, enabling automated testing a
 ## References
 
 - [Surfalytics - End to End Analytics](https://github.com/surfalytics/data-projects/tree/main/async-projects/01-end-to-end-analytics-with-dbt-and-looker)
-- Example of the project using Pentaho: https://github.com/aizhannna/data-projects/tree/main
 - [dbt Documentation](https://docs.getdbt.com/)
 - [Medallion Architecture](https://www.databricks.com/glossary/medallion-architecture)
