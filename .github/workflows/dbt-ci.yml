@@ -1,0 +1,151 @@
+name: dbt CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    paths:
+      - "dbt_superstore/**"
+
+env:
+  DBT_PROFILES_DIR: /usr/app
+  DBT_PROJECT_DIR: /usr/app
+
+jobs:
+  dbt-run-test:
+    # Only run on PR open/sync/reopen, not on close
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/dbt-labs/dbt-postgres:1.8.2
+      options: --platform linux/amd64
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed for state comparison
+
+      - name: Create CI profiles.yml
+        working-directory: dbt_superstore
+        run: |
+          cat > profiles.yml << EOF
+          dbt_superstore:
+            target: ci
+            outputs:
+              ci:
+                type: postgres
+                host: ${{ secrets.DBT_HOST }}
+                port: 5432
+                user: ${{ secrets.DBT_USER }}
+                password: ${{ secrets.DBT_PASSWORD }}
+                dbname: ${{ secrets.DBT_DATABASE }}
+                schema: ci_pr_${{ github.event.pull_request.number }}
+                threads: 4
+          EOF
+
+      - name: Install dbt packages
+        working-directory: dbt_superstore
+        run: dbt deps
+
+      - name: Verify connection
+        working-directory: dbt_superstore
+        run: dbt debug
+
+      - name: Get production manifest (for state comparison)
+        working-directory: dbt_superstore
+        continue-on-error: true
+        run: |
+          # Try to download production manifest from main branch
+          # If this fails, we'll run all models instead of just modified ones
+          mkdir -p target-prod
+          git show origin/main:dbt_superstore/target/manifest.json > target-prod/manifest.json 2>/dev/null || echo "No production manifest found - will run all models"
+
+      - name: Run dbt models (modified only)
+        working-directory: dbt_superstore
+        run: |
+          if [ -f target-prod/manifest.json ]; then
+            echo "Running modified models only..."
+            dbt run --select state:modified+ --state target-prod
+          else
+            echo "No production state found - running all models..."
+            dbt run
+          fi
+
+      - name: Run dbt tests
+        working-directory: dbt_superstore
+        run: |
+          if [ -f target-prod/manifest.json ]; then
+            dbt test --select state:modified+ --state target-prod
+          else
+            dbt test
+          fi
+
+      - name: Generate docs (optional)
+        working-directory: dbt_superstore
+        run: dbt docs generate
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dbt-artifacts-pr-${{ github.event.pull_request.number }}
+          path: |
+            dbt_superstore/target/manifest.json
+            dbt_superstore/target/run_results.json
+            dbt_superstore/target/catalog.json
+
+  # Cleanup job - runs when PR is closed (merged or not)
+  cleanup-ci-schema:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/dbt-labs/dbt-postgres:1.8.2
+      options: --platform linux/amd64
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create CI profiles.yml
+        working-directory: dbt_superstore
+        run: |
+          cat > profiles.yml << EOF
+          dbt_superstore:
+            target: ci
+            outputs:
+              ci:
+                type: postgres
+                host: ${{ secrets.DBT_HOST }}
+                port: 5432
+                user: ${{ secrets.DBT_USER }}
+                password: ${{ secrets.DBT_PASSWORD }}
+                dbname: ${{ secrets.DBT_DATABASE }}
+                schema: ci_pr_${{ github.event.pull_request.number }}
+                threads: 4
+          EOF
+
+      - name: Drop CI schemas
+        working-directory: dbt_superstore
+        run: |
+          # Install psql for direct SQL execution
+          apt-get update && apt-get install -y postgresql-client
+
+          # Drop all CI schemas created by this PR
+          PGPASSWORD=${{ secrets.DBT_PASSWORD }} psql \
+            -h ${{ secrets.DBT_HOST }} \
+            -U ${{ secrets.DBT_USER }} \
+            -d ${{ secrets.DBT_DATABASE }} \
+            -c "DROP SCHEMA IF EXISTS ci_pr_${{ github.event.pull_request.number }}_bronze CASCADE;"
+
+          PGPASSWORD=${{ secrets.DBT_PASSWORD }} psql \
+            -h ${{ secrets.DBT_HOST }} \
+            -U ${{ secrets.DBT_USER }} \
+            -d ${{ secrets.DBT_DATABASE }} \
+            -c "DROP SCHEMA IF EXISTS ci_pr_${{ github.event.pull_request.number }}_silver CASCADE;"
+
+          PGPASSWORD=${{ secrets.DBT_PASSWORD }} psql \
+            -h ${{ secrets.DBT_HOST }} \
+            -U ${{ secrets.DBT_USER }} \
+            -d ${{ secrets.DBT_DATABASE }} \
+            -c "DROP SCHEMA IF EXISTS ci_pr_${{ github.event.pull_request.number }}_gold CASCADE;"
+
+          echo "Cleaned up CI schemas for PR #${{ github.event.pull_request.number }}"
